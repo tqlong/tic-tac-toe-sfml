@@ -20,6 +20,7 @@ void GameState::playAndChangePlayer(int i, int j) {
         && s[i][j] == ' ' && !gameStop) {
         s[i][j] = currentPlayer;
         currentPlayer = (currentPlayer == 'X') ? 'O':'X';
+        checkAndProcessFinalState();
     }
 }
 

@@ -33,7 +33,6 @@ int main()
                 default: break;
             }
         }
-        state.checkAndProcessFinalState();
         
         engine.render();
     }

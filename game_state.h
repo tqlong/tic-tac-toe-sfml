@@ -26,10 +26,10 @@ struct GameState
     // Play the game on the given position
     void playAndChangePlayer(int i, int j);
 
+private:
     // Check if the game is over and update the final score
     void checkAndProcessFinalState();
 
-private:
     // Check if the game is over
     bool isFinalState();
 
@@ -37,6 +37,7 @@ private:
     // 1: X wins, -1: O wins, 0: draw
     int getScoreFinalState();
 
+    friend class GameStateTest;
 };
 
 #endif
