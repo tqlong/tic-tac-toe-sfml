@@ -1,7 +1,3 @@
-#include <SFML/Graphics.hpp>
-#include <iostream>
-#include <vector>
-
 #include "resource_manager.h"
 #include "game_state.h"
 #include "render_engine.h"
