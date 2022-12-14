@@ -18,11 +18,13 @@ class RenderEngine {
 
 public:
     // Size of the game board
-    static const int WINDOW_WIDTH = 600;
-    static const int WINDOW_HEIGHT = 600;
+    static const int WINDOW_WIDTH = 900;
+    static const int WINDOW_HEIGHT = 900;
     // Size of each cell
-    static const int CELL_WIDTH = 200;
-    static const int CELL_HEIGHT = 200;
+    static const int CELL_WIDTH = WINDOW_WIDTH / 3;
+    static const int CELL_HEIGHT = WINDOW_HEIGHT / 3;
+    //
+    static const int SHAPE_RADIUS = CELL_WIDTH / 2;
     // position of O, X in texture image.png
     static const sf::IntRect ORECT;
     static const sf::IntRect XRECT;

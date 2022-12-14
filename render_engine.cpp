@@ -34,7 +34,7 @@ void RenderEngine::render() {
 // Create shape X, O
 sf::CircleShape RenderEngine::createShape(sf::Texture& texture, int i, int j, char player)
 {
-    sf::CircleShape shape(100.f);
+    sf::CircleShape shape(SHAPE_RADIUS);
     // shape.setFillColor(sf::Color::Green);
     shape.setTexture(&texture);
     if (player == 'O')
