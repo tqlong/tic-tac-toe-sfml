@@ -26,3 +26,8 @@ cmake ..
 make
 ./tic-tac-toe
 ```
+
+## Unit tests
+```
+make test
+```
