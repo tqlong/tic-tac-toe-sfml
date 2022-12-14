@@ -1,4 +1,4 @@
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 #include "../game_state.h"
 
 class GameStateTest : public ::testing::Test
