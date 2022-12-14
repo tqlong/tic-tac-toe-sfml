@@ -1,5 +1,9 @@
 #include "render_engine.h"
 
+// position of O, X in texture image.png
+const sf::IntRect RenderEngine::ORECT = sf::IntRect(110, 20, 80, 80);
+const sf::IntRect RenderEngine::XRECT = sf::IntRect(20, 20, 80, 80);
+
 // Render the game state to the screen
 // create shape X, O
 // create text to display final message
@@ -34,10 +38,10 @@ sf::CircleShape RenderEngine::createShape(sf::Texture& texture, int i, int j, ch
     // shape.setFillColor(sf::Color::Green);
     shape.setTexture(&texture);
     if (player == 'O')
-        shape.setTextureRect(sf::IntRect(110, 20, 80, 80));
+        shape.setTextureRect(ORECT);
     else
-        shape.setTextureRect(sf::IntRect(20, 20, 80, 80));
-    shape.setPosition(sf::Vector2f(i*200,j*200));
+        shape.setTextureRect(XRECT);
+    shape.setPosition(sf::Vector2f(i*CELL_HEIGHT, j*CELL_WIDTH));
 
     return shape;
 }
@@ -49,9 +53,6 @@ sf::Text RenderEngine::createText(sf::Font& font, const std::string& msg)
     // select the font
     text.setFont(font); // font is a sf::Font
 
-    // set the string to display
-    text.setString("X wins");
-
     // set the character size
     text.setCharacterSize(24); // in pixels, not points!
 
@@ -60,10 +61,14 @@ sf::Text RenderEngine::createText(sf::Font& font, const std::string& msg)
 
     // set the text style
     text.setStyle(sf::Text::Bold | sf::Text::Underlined);
-    text.setPosition(150, 200);
     text.setScale(3.0f, 3.0f);
 
+    // set the string to display
     text.setString(msg);
+    // set the origin to the center of the text
+    text.setOrigin(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2);
+    // set the position to the center of the window
+    text.setPosition(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 
     return text;
 }  

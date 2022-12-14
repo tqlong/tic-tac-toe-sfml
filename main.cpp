@@ -4,7 +4,10 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(600, 600), "Tic-tac-toe!");
+    sf::RenderWindow window(
+        sf::VideoMode(RenderEngine::WINDOW_WIDTH, RenderEngine::WINDOW_HEIGHT),
+        "Tic-tac-toe!"
+    );
     ResourceManager manager;
     GameState state;
     RenderEngine engine(window, manager, state);
@@ -22,7 +25,8 @@ int main()
                 // Play by mouse click
                 case sf::Event::MouseButtonReleased: {
                     sf::Vector2i localPosition = sf::Mouse::getPosition(window);
-                    int i = localPosition.x / 200, j = localPosition.y / 200;
+                    int i = localPosition.x / RenderEngine::CELL_HEIGHT,
+                        j = localPosition.y / RenderEngine::CELL_WIDTH;
                     state.playAndChangePlayer(i, j);
                     break;
                 }

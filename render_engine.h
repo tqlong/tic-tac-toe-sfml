@@ -17,6 +17,16 @@ class RenderEngine {
     GameState& state;
 
 public:
+    // Size of the game board
+    static const int WINDOW_WIDTH = 600;
+    static const int WINDOW_HEIGHT = 600;
+    // Size of each cell
+    static const int CELL_WIDTH = 200;
+    static const int CELL_HEIGHT = 200;
+    // position of O, X in texture image.png
+    static const sf::IntRect ORECT;
+    static const sf::IntRect XRECT;
+
     RenderEngine(sf::RenderWindow& window_, ResourceManager& manager_, GameState& state_)
         : window(window_), manager(manager_), state(state_) {}
 

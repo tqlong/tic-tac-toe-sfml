@@ -1,6 +1,9 @@
 .vscode/
+tic-tac-toe
+tic-tac-toe.exe
 prog
 prog.exe
+build/
 
 # Prerequisites
 *.d
