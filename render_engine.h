@@ -26,6 +26,16 @@ public:
     //
     static const int SHAPE_RADIUS = CELL_WIDTH / 2;
     // position of O, X in texture image.png
+
+    static const int BUTTON_HvH_X = 100;
+    static const int BUTTON_HvH_Y = WINDOW_HEIGHT/2-100;
+    static const int BUTTON_HvM_X = WINDOW_WIDTH/2+100;
+    static const int BUTTON_HvM_Y = WINDOW_HEIGHT/2-200;
+    static const int BUTTON_MvH_X = WINDOW_WIDTH/2+100;
+    static const int BUTTON_MvH_Y = WINDOW_HEIGHT/2+100;
+    static const int BUTTON_WIDTH = 200;
+    static const int BUTTON_HEIGHT = 200;
+
     static const sf::IntRect ORECT;
     static const sf::IntRect XRECT;
 
@@ -36,12 +46,35 @@ public:
     // create shape X, O
     // create text to display final message
     void render();
+
+    static sf::IntRect getButtonHvsHRect() {
+        return sf::IntRect(
+            RenderEngine::BUTTON_HvH_X, RenderEngine::BUTTON_HvH_Y,
+            RenderEngine::BUTTON_WIDTH, RenderEngine::BUTTON_HEIGHT);
+    }
+    static sf::IntRect getButtonHvsMRect() { 
+        return sf::IntRect(
+            RenderEngine::BUTTON_HvM_X, RenderEngine::BUTTON_HvM_Y,
+            RenderEngine::BUTTON_WIDTH, RenderEngine::BUTTON_HEIGHT);
+    }
+    static sf::IntRect getButtonMvsHRect() { 
+        return sf::IntRect(
+            RenderEngine::BUTTON_MvH_X, RenderEngine::BUTTON_MvH_Y,
+            RenderEngine::BUTTON_WIDTH, RenderEngine::BUTTON_HEIGHT);
+    }
 private:
     // Create shape X, O
     sf::CircleShape createShape(sf::Texture& texture, int i, int j, char player);
 
     // Create text to display final message
     sf::Text createText(sf::Font& font, const std::string& msg);
+
+    // Render functions for each screen
+    void renderPlayModeScreen();
+    void renderPlayingScreen();
+
+    // Create button
+    sf::Sprite createButton(const std::string& msg);
 };
 
 #endif

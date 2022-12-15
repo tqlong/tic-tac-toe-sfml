@@ -27,10 +27,7 @@ if (SFML_FOUND)
   target_link_libraries(tic-tac-toe ${SFML_LIBRARIES})
 endif()
 
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/image.png
-        DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/arial.ttf
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resource
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 add_subdirectory(googletest)

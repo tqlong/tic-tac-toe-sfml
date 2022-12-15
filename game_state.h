@@ -20,22 +20,68 @@ struct GameState
     char currentPlayer = 'X';
     int finalScore = -10;
 
+    bool isHoverOnButtonHvsH = false;
+    bool isHoverOnButtonHvsM = false;
+    bool isHoverOnButtonMvsH = false;
+
+    bool thinking = false;
+
+    int hoverI = -1;
+    int hoverJ = -1;
+
+    enum class PlayScreen {
+        PlayModeScreen,
+        PlayingScreen,
+    };
+
+    enum class PlayMode {
+        HumanVsHuman,
+        HumanVsMachine,
+    };
+
+    PlayScreen playScreen = PlayScreen::PlayModeScreen;
+    PlayMode playMode = PlayMode::HumanVsHuman;
+
     // Get final message to display when game is over
     std::string getFinalMessage() const;
 
     // Play the game on the given position
     void playAndChangePlayer(int i, int j);
 
+    // Play the game first with AI
+    void computerPlayFirst();
+
+    // set the hover cell
+    void setHoveredCell(int i, int j);
+
 private:
+    // toggle player
+    void togglePlayer();
+
     // Check if the game is over and update the final score
     void checkAndProcessFinalState();
 
     // Check if the game is over
-    bool isFinalState();
+    bool isFinalState(State s);
 
     // Get the final score
     // 1: X wins, -1: O wins, 0: draw
-    int getScoreFinalState();
+    int getScoreFinalState(State s);
+
+    // Get the next player
+    char getNextPlayer(State s);
+
+    // Play the game on the given position
+    State play(State s, int i, int j, char player);
+
+    // Get the next possible states
+    std::vector<State> getNextStates(State s);
+
+    // Get the score of the given state via minimax
+    std::pair<int, State> getScore(State s);
+
+    // Get the computer play (AI)
+    std::pair<int, int> getComputerPlay(State s);
 
     friend class GameStateTest;
 };

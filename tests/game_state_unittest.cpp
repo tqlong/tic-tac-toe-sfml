@@ -48,7 +48,7 @@ protected:
             state.s[0][0] = 'X'; state.s[0][1] = 'X'; state.s[0][2] = 'X';
             state.s[1][0] = 'O'; state.s[1][1] = 'O'; state.s[1][2] = 'X';
             state.s[2][0] = ' '; state.s[2][1] = ' '; state.s[2][2] = ' ';
-            EXPECT_EQ(state.isFinalState(), true);
+            EXPECT_EQ(state.isFinalState(state.s), true);
             state.checkAndProcessFinalState();
             EXPECT_EQ(state.finalScore, 1);
             EXPECT_EQ(state.gameStop, true);
@@ -59,7 +59,7 @@ protected:
             state.s[0][0] = 'X'; state.s[0][1] = 'X'; state.s[0][2] = ' ';
             state.s[1][0] = 'O'; state.s[1][1] = 'O'; state.s[1][2] = 'O';
             state.s[2][0] = 'X'; state.s[2][1] = ' '; state.s[2][2] = ' ';
-            EXPECT_EQ(state.isFinalState(), true);
+            EXPECT_EQ(state.isFinalState(state.s), true);
             state.checkAndProcessFinalState();
             EXPECT_EQ(state.finalScore, -1);
             EXPECT_EQ(state.gameStop, true);
@@ -70,12 +70,20 @@ protected:
             state.s[0][0] = 'X'; state.s[0][1] = 'X'; state.s[0][2] = 'O';
             state.s[1][0] = 'O'; state.s[1][1] = 'O'; state.s[1][2] = 'X';
             state.s[2][0] = 'X'; state.s[2][1] = 'O'; state.s[2][2] = 'X';
-            EXPECT_EQ(state.isFinalState(), true);
+            EXPECT_EQ(state.isFinalState(state.s), true);
             state.checkAndProcessFinalState();
             EXPECT_EQ(state.finalScore, 0);
             EXPECT_EQ(state.gameStop, true);
         }
     }
+
+    void TestScreen() {
+        GameState state;
+        EXPECT_EQ(state.playScreen, GameState::PlayScreen::PlayModeScreen);
+        state.playScreen = GameState::PlayScreen::PlayingScreen;
+        EXPECT_EQ(state.playScreen, GameState::PlayScreen::PlayingScreen);
+    }
+
 private:
     GameState state;
 };
@@ -98,4 +106,8 @@ TEST_F(GameStateTest, playAndChangePlayer) {
 
 TEST_F(GameStateTest, checkAndProcessFinalState) {
     TestCheckAndProcessFinalState();
+}
+
+TEST_F(GameStateTest, screen) {
+    TestScreen();
 }

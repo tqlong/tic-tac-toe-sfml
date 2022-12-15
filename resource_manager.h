@@ -11,13 +11,14 @@ class ResourceManager
 {
     sf::Texture texture;
     sf::Font font;
+    sf::Texture buttonTexture;
 
 public:
     ResourceManager();
 
     // Getters
     sf::Texture& getTexture();
-
+    sf::Texture& getButtonTexture();
     sf::Font& getFont();
 };
 

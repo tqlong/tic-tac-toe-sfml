@@ -10,6 +10,56 @@ const sf::IntRect RenderEngine::XRECT = sf::IntRect(20, 20, 80, 80);
 void RenderEngine::render() {
     window.clear();
 
+    switch (state.playScreen) {
+    case GameState::PlayScreen::PlayModeScreen:
+        renderPlayModeScreen();
+        break;
+    case GameState::PlayScreen::PlayingScreen:
+        renderPlayingScreen();
+        break;
+    }
+
+    window.display();
+}
+
+void RenderEngine::renderPlayModeScreen()
+{
+    // Draw the play buttons
+    sf::Sprite buttonHvsH = createButton("Human vs Human");
+    buttonHvsH.setPosition(BUTTON_HvH_X, BUTTON_HvH_Y);
+    if (state.isHoverOnButtonHvsH) {
+        buttonHvsH.setColor(sf::Color(255, 255, 255, 200));
+    }
+
+    sf::Sprite buttonHvsM = createButton("Human vs Machine");
+    buttonHvsM.setPosition(BUTTON_HvM_X, BUTTON_HvM_Y);
+    if (state.isHoverOnButtonHvsM) {
+        buttonHvsM.setColor(sf::Color(255, 255, 255, 200));
+    }
+
+    sf::Sprite buttonMvsH = createButton("Machine vs Human");
+    buttonMvsH.setPosition(BUTTON_MvH_X, BUTTON_MvH_Y);
+    if (state.isHoverOnButtonMvsH) {
+        buttonMvsH.setColor(sf::Color(255, 255, 255, 200));
+    }
+
+    window.draw(buttonHvsH);
+    window.draw(buttonHvsM);
+    window.draw(buttonMvsH);
+}
+
+void RenderEngine::renderPlayingScreen()
+{
+    if (state.hoverI != -1 && state.hoverJ != -1) {
+        sf::RectangleShape shape(sf::Vector2f(CELL_WIDTH, CELL_HEIGHT));
+        shape.setFillColor(sf::Color(0, 0, 0, 100));
+        shape.setOutlineColor(sf::Color::Yellow);
+        shape.setOutlineThickness(3);
+        shape.setPosition(state.hoverI*CELL_WIDTH, state.hoverJ*CELL_HEIGHT);
+        window.draw(shape);
+    }
+
+    // Draw the shapes
     sf::Texture& texture = manager.getTexture();
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
@@ -20,15 +70,20 @@ void RenderEngine::render() {
         }
     }
 
+    // Draw the final message
     if (state.gameStop) {
         sf::Text text = createText(
             manager.getFont(),
             state.getFinalMessage()
         );
         window.draw(text);
+    } else if (state.thinking) {
+        sf::Text text = createText(
+            manager.getFont(),
+            "Thinking..."
+        );
+        window.draw(text);
     }
-
-    window.display();
 }
 
 // Create shape X, O
@@ -73,3 +128,15 @@ sf::Text RenderEngine::createText(sf::Font& font, const std::string& msg)
     return text;
 }  
 
+sf::Sprite RenderEngine::createButton(const std::string& msg)
+{
+    sf::Sprite button;
+    button.setTexture(manager.getButtonTexture());
+    if (msg == "Human vs Machine")
+        button.setTextureRect(sf::IntRect(20, 20, 200, 200));
+    else if (msg == "Human vs Human")
+        button.setTextureRect(sf::IntRect(230, 20, 200, 200));
+    else // if (msg == "Machine vs Human")
+        button.setTextureRect(sf::IntRect(220, 20, -200, 200));
+    return button;
+}
