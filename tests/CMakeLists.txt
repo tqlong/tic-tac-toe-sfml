@@ -18,6 +18,7 @@ include_directories(
 set(GAME_STATE_UNITTEST_SOURCE_FILES
   game_state_unittest.cpp
   ../game_state.cpp
+  ../alpha_beta.cpp
 )
 add_executable(game_state_unittest ${GAME_STATE_UNITTEST_SOURCE_FILES})
 target_link_libraries(game_state_unittest gtest gtest_main)

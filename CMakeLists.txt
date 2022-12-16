@@ -21,6 +21,7 @@ set(MAIN_SOURCE_FILES
   game_state.cpp
   render_engine.cpp
   controller.cpp
+  alpha_beta.cpp
 )
 add_executable(tic-tac-toe ${MAIN_SOURCE_FILES})    
 if (SFML_FOUND)
