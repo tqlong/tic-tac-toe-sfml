@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "game_state.h"
+#include "render_engine.h"
 #include "queue"
 
 /// @brief Controller class
@@ -13,14 +14,14 @@
 class Controller
 {
     GameState& state;
-    sf::RenderWindow& window;
+    GameWindow& window;
     sf::Mutex mutex;
 
     std::queue<sf::Event> queue;
     sf::Thread thread;
 public:
-    Controller(GameState& state_, sf::RenderWindow& window_)
-        : state(state_), window(window_),
+    Controller(GameState& state_, GameWindow& engine_)
+        : state(state_), window(engine_),
           thread(&Controller::run, this) {}
 
     // process an event
@@ -37,9 +38,6 @@ private:
 
     // process a click event
     void onMouseButtonReleased(sf::Event& event);
-
-    // check if window is open
-    bool isWindowOpen() { return window.isOpen(); }
 
     void checkButtonClicked(sf::Vector2i localPosition);
 

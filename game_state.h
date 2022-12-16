@@ -20,10 +20,6 @@ struct GameState
     char currentPlayer = 'X';
     int finalScore = -10;
 
-    bool isHoverOnButtonHvsH = false;
-    bool isHoverOnButtonHvsM = false;
-    bool isHoverOnButtonMvsH = false;
-
     bool thinking = false;
 
     int hoverI = -1;

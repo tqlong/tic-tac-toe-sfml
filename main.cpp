@@ -10,10 +10,9 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(RenderEngine::WINDOW_WIDTH, RenderEngine::WINDOW_HEIGHT), "Tic-tac-toe!");
     ResourceManager manager;
     GameState state; // Model
-    RenderEngine engine(window, manager, state); // View
+    GameWindow window(manager, state); // View
     Controller controller(state, window); // Controller
     controller.launch(); // launch the event thread
 
@@ -24,7 +23,7 @@ int main()
         while (window.pollEvent(event)) {
             controller.processEvent(event);
         }
-        engine.render();
+        window.render();
     }
 
     controller.wait();

@@ -1,14 +1,14 @@
 #include "render_engine.h"
 
 // position of O, X in texture image.png
-const sf::IntRect RenderEngine::ORECT = sf::IntRect(110, 20, 80, 80);
-const sf::IntRect RenderEngine::XRECT = sf::IntRect(20, 20, 80, 80);
+const sf::IntRect GameWindow::ORECT = sf::IntRect(110, 20, 80, 80);
+const sf::IntRect GameWindow::XRECT = sf::IntRect(20, 20, 80, 80);
 
 // Render the game state to the screen
 // create shape X, O
 // create text to display final message
-void RenderEngine::render() {
-    window.clear();
+void GameWindow::render() {
+    clear();
 
     switch (state.playScreen) {
     case GameState::PlayScreen::PlayModeScreen:
@@ -19,36 +19,36 @@ void RenderEngine::render() {
         break;
     }
 
-    window.display();
+    display();
 }
 
-void RenderEngine::renderPlayModeScreen()
+void GameWindow::renderPlayModeScreen()
 {
     // Draw the play buttons
     sf::Sprite buttonHvsH = createButton("Human vs Human");
     buttonHvsH.setPosition(BUTTON_HvH_X, BUTTON_HvH_Y);
-    if (state.isHoverOnButtonHvsH) {
+    if (isHoverOnButtonHvsH) {
         buttonHvsH.setColor(sf::Color(255, 255, 255, 200));
     }
 
     sf::Sprite buttonHvsM = createButton("Human vs Machine");
     buttonHvsM.setPosition(BUTTON_HvM_X, BUTTON_HvM_Y);
-    if (state.isHoverOnButtonHvsM) {
+    if (isHoverOnButtonHvsM) {
         buttonHvsM.setColor(sf::Color(255, 255, 255, 200));
     }
 
     sf::Sprite buttonMvsH = createButton("Machine vs Human");
     buttonMvsH.setPosition(BUTTON_MvH_X, BUTTON_MvH_Y);
-    if (state.isHoverOnButtonMvsH) {
+    if (isHoverOnButtonMvsH) {
         buttonMvsH.setColor(sf::Color(255, 255, 255, 200));
     }
 
-    window.draw(buttonHvsH);
-    window.draw(buttonHvsM);
-    window.draw(buttonMvsH);
+    draw(buttonHvsH);
+    draw(buttonHvsM);
+    draw(buttonMvsH);
 }
 
-void RenderEngine::renderPlayingScreen()
+void GameWindow::renderPlayingScreen()
 {
     if (state.hoverI != -1 && state.hoverJ != -1) {
         sf::RectangleShape shape(sf::Vector2f(CELL_WIDTH, CELL_HEIGHT));
@@ -56,7 +56,8 @@ void RenderEngine::renderPlayingScreen()
         shape.setOutlineColor(sf::Color::Yellow);
         shape.setOutlineThickness(3);
         shape.setPosition(state.hoverI*CELL_WIDTH, state.hoverJ*CELL_HEIGHT);
-        window.draw(shape);
+        
+        draw(shape);
     }
 
     // Draw the shapes
@@ -65,29 +66,23 @@ void RenderEngine::renderPlayingScreen()
         for (int j = 0; j < SIZE; j++) {
             if (state.s[i][j] != ' ') {
                 sf::CircleShape shape = createShape(texture, i, j, state.s[i][j]);
-                window.draw(shape);
+                draw(shape);
             }
         }
     }
 
     // Draw the final message
     if (state.gameStop) {
-        sf::Text text = createText(
-            manager.getFont(),
-            state.getFinalMessage()
-        );
-        window.draw(text);
+        sf::Text text = createText(manager.getFont(), state.getFinalMessage());
+        draw(text);
     } else if (state.thinking) {
-        sf::Text text = createText(
-            manager.getFont(),
-            "Thinking..."
-        );
-        window.draw(text);
+        sf::Text text = createText(manager.getFont(), "Thinking...");
+        draw(text);
     }
 }
 
 // Create shape X, O
-sf::CircleShape RenderEngine::createShape(sf::Texture& texture, int i, int j, char player)
+sf::CircleShape GameWindow::createShape(sf::Texture& texture, int i, int j, char player)
 {
     sf::CircleShape shape(SHAPE_RADIUS);
     // shape.setFillColor(sf::Color::Green);
@@ -102,7 +97,7 @@ sf::CircleShape RenderEngine::createShape(sf::Texture& texture, int i, int j, ch
 }
 
 // Create text to display final message
-sf::Text RenderEngine::createText(sf::Font& font, const std::string& msg)
+sf::Text GameWindow::createText(sf::Font& font, const std::string& msg)
 {
     sf::Text text;
     // select the font
@@ -128,7 +123,7 @@ sf::Text RenderEngine::createText(sf::Font& font, const std::string& msg)
     return text;
 }  
 
-sf::Sprite RenderEngine::createButton(const std::string& msg)
+sf::Sprite GameWindow::createButton(const std::string& msg)
 {
     sf::Sprite button;
     button.setTexture(manager.getButtonTexture());

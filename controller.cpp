@@ -31,8 +31,8 @@ void Controller::onMouseMoved(sf::Event &event)
         checkButtonHovered(localPosition);
     } else {
         sf::Vector2i localPosition = { event.mouseMove.x, event.mouseMove.y};
-        int i = localPosition.x / RenderEngine::CELL_HEIGHT,
-            j = localPosition.y / RenderEngine::CELL_WIDTH;
+        int i = localPosition.x / GameWindow::CELL_HEIGHT,
+            j = localPosition.y / GameWindow::CELL_WIDTH;
         state.setHoveredCell(i, j);
     }
 }
@@ -43,8 +43,8 @@ void Controller::onMouseButtonReleased(sf::Event &event)
     {
         if (!state.gameStop) {
             sf::Vector2i localPosition = { event.mouseButton.x, event.mouseButton.y};
-            int i = localPosition.x / RenderEngine::CELL_HEIGHT,
-                j = localPosition.y / RenderEngine::CELL_WIDTH;
+            int i = localPosition.x / GameWindow::CELL_HEIGHT,
+                j = localPosition.y / GameWindow::CELL_WIDTH;
             state.playAndChangePlayer(i, j);
         } else { // game is over so reset the game
             state.resetGame();
@@ -60,15 +60,15 @@ void Controller::onMouseButtonReleased(sf::Event &event)
 // check if a button is clicked
 void Controller::checkButtonClicked(sf::Vector2i localPosition)
 {
-   if (RenderEngine::getButtonHvsHRect().contains(localPosition)) {
+   if (GameWindow::getButtonHvsHRect().contains(localPosition)) {
         state.playScreen = GameState::PlayScreen::PlayingScreen;
         state.playMode = GameState::PlayMode::HumanVsHuman;
         std::cout << "Human vs Human" << std::endl;
-    } else if (RenderEngine::getButtonHvsMRect().contains(localPosition)) {
+    } else if (GameWindow::getButtonHvsMRect().contains(localPosition)) {
         state.playScreen = GameState::PlayScreen::PlayingScreen;
         state.playMode = GameState::PlayMode::HumanVsMachine;
         std::cout << "Human vs Machine" << std::endl;
-    } else if (RenderEngine::getButtonMvsHRect().contains(localPosition)) {
+    } else if (GameWindow::getButtonMvsHRect().contains(localPosition)) {
         state.playScreen = GameState::PlayScreen::PlayingScreen;
         state.playMode = GameState::PlayMode::HumanVsMachine;
         state.computerPlayFirst();
@@ -79,9 +79,9 @@ void Controller::checkButtonClicked(sf::Vector2i localPosition)
 // check if a button is hovered
 void Controller::checkButtonHovered(sf::Vector2i localPosition)
 {
-    state.isHoverOnButtonHvsH = RenderEngine::getButtonHvsHRect().contains(localPosition);
-    state.isHoverOnButtonHvsM = RenderEngine::getButtonHvsMRect().contains(localPosition);
-    state.isHoverOnButtonMvsH = RenderEngine::getButtonMvsHRect().contains(localPosition);
+    window.isHoverOnButtonHvsH = GameWindow::getButtonHvsHRect().contains(localPosition);
+    window.isHoverOnButtonHvsM = GameWindow::getButtonHvsMRect().contains(localPosition);
+    window.isHoverOnButtonMvsH = GameWindow::getButtonMvsHRect().contains(localPosition);
 }
 
 void Controller::addEvent(sf::Event event)

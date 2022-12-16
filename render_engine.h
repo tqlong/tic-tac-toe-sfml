@@ -11,8 +11,7 @@
  * This class is responsible for rendering the game state
  * to the screen.
  */
-class RenderEngine {
-    sf::RenderWindow& window;
+class GameWindow: public sf::RenderWindow {
     ResourceManager& manager;
     GameState& state;
 
@@ -39,8 +38,13 @@ public:
     static const sf::IntRect ORECT;
     static const sf::IntRect XRECT;
 
-    RenderEngine(sf::RenderWindow& window_, ResourceManager& manager_, GameState& state_)
-        : window(window_), manager(manager_), state(state_) {}
+    bool isHoverOnButtonHvsH = false;
+    bool isHoverOnButtonHvsM = false;
+    bool isHoverOnButtonMvsH = false;
+
+    GameWindow(ResourceManager& manager_, GameState& state_)
+        : sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Tic Tac Toe"),
+          manager(manager_), state(state_) {}
 
     // Render the game state to the screen
     // create shape X, O
@@ -49,18 +53,18 @@ public:
 
     static sf::IntRect getButtonHvsHRect() {
         return sf::IntRect(
-            RenderEngine::BUTTON_HvH_X, RenderEngine::BUTTON_HvH_Y,
-            RenderEngine::BUTTON_WIDTH, RenderEngine::BUTTON_HEIGHT);
+            BUTTON_HvH_X, BUTTON_HvH_Y,
+            BUTTON_WIDTH, BUTTON_HEIGHT);
     }
     static sf::IntRect getButtonHvsMRect() { 
         return sf::IntRect(
-            RenderEngine::BUTTON_HvM_X, RenderEngine::BUTTON_HvM_Y,
-            RenderEngine::BUTTON_WIDTH, RenderEngine::BUTTON_HEIGHT);
+            BUTTON_HvM_X, BUTTON_HvM_Y,
+            BUTTON_WIDTH, BUTTON_HEIGHT);
     }
     static sf::IntRect getButtonMvsHRect() { 
         return sf::IntRect(
-            RenderEngine::BUTTON_MvH_X, RenderEngine::BUTTON_MvH_Y,
-            RenderEngine::BUTTON_WIDTH, RenderEngine::BUTTON_HEIGHT);
+            BUTTON_MvH_X, BUTTON_MvH_Y,
+            BUTTON_WIDTH, BUTTON_HEIGHT);
     }
 private:
     // Create shape X, O
