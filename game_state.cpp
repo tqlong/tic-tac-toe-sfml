@@ -124,7 +124,7 @@ char GameState::getNextPlayer(State s)
     else return 'O';
 }
 
-State GameState::play(State s, int i, int j, char player)
+GameState::State GameState::play(State s, int i, int j, char player)
 {
     State newState = State(3, Row(3, ' '));
     for (int i = 0; i < SIZE; i++) {
@@ -136,7 +136,7 @@ State GameState::play(State s, int i, int j, char player)
     return newState;
 }
 
-std::vector<State> GameState::getNextStates(State s)
+std::vector<GameState::State> GameState::getNextStates(State s)
 {
     char nextPlayer = getNextPlayer(s);
     std::vector<State> states;
@@ -158,7 +158,7 @@ std::vector<State> GameState::getNextStates(State s)
 /// @param alpha MAX best score
 /// @param beta MIN best score
 /// @return std::pair<int, State> the score and the best next state
-std::pair<int, State> GameState::getScore(State s, bool isMax, int alpha, int beta)
+std::pair<int, GameState::State> GameState::getScore(State s, bool isMax, int alpha, int beta)
 {
     // base case
     if (isFinalState(s)) return make_pair(getScoreFinalState(s), s);

@@ -4,10 +4,6 @@
 #include <vector>
 #include <string>
 
-typedef std::vector<char> Row;
-typedef std::vector<Row> State;
-const int SIZE=3;
-
 /**
  * @brief GameState class
  * This class is responsible for storing the state of the game
@@ -26,7 +22,12 @@ public:
         HumanVsMachine,
     };
 
+    static const int SIZE=3;
+
 private:
+    typedef std::vector<char> Row;
+    typedef std::vector<Row> State;
+
     State s = State(SIZE, Row(SIZE, ' '));
     bool gameStop = false;
     char currentPlayer = 'X';

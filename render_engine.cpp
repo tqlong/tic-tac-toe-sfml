@@ -62,8 +62,8 @@ void GameWindow::renderPlayingScreen()
 
     // Draw the shapes
     sf::Texture& texture = manager.getTexture();
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
+    for (int i = 0; i < GameState::SIZE; i++) {
+        for (int j = 0; j < GameState::SIZE; j++) {
             char play = state.getPlay(i, j);
             if (play != ' ') {
                 sf::CircleShape shape = createShape(texture, i, j, play);
@@ -139,7 +139,7 @@ sf::Sprite GameWindow::createButton(const std::string& msg)
 
 void GameWindow::setHoveredCell(int i, int j)
 {
-    if (i >= 0 && i < SIZE && j >= 0 && j < SIZE) {
+    if (i >= 0 && i < GameState::SIZE && j >= 0 && j < GameState::SIZE) {
         hoverI = i;
         hoverJ = j;
     }
