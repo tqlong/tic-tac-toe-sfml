@@ -1,6 +1,5 @@
 #include <iostream>
 #include <queue>
-
 #include <SFML/Graphics.hpp>
 
 #include "resource_manager.h" // resource management
