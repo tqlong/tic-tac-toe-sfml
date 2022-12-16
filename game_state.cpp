@@ -58,6 +58,14 @@ void GameState::setHoveredCell(int i, int j)
     }
 }
 
+void GameState::resetGame()
+{
+    s = State(SIZE, Row(SIZE, ' '));
+    gameStop = false;
+    currentPlayer = 'X';
+    finalScore = -10;
+}
+
 // Check if the game is over and update the final score
 void GameState::checkAndProcessFinalState() {
     if (isFinalState(s)) {

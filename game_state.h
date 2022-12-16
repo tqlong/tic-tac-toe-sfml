@@ -54,6 +54,9 @@ struct GameState
     // set the hover cell
     void setHoveredCell(int i, int j);
 
+    // reset the game
+    void resetGame();
+
 private:
     // toggle player
     void togglePlayer();

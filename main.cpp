@@ -39,10 +39,16 @@ void onMouseButtonReleased(GameState& state, sf::Event& event)
 {
     if (state.playScreen == GameState::PlayScreen::PlayingScreen)
     {
-        sf::Vector2i localPosition = { event.mouseButton.x, event.mouseButton.y};
-        int i = localPosition.x / RenderEngine::CELL_HEIGHT,
-            j = localPosition.y / RenderEngine::CELL_WIDTH;
-        state.playAndChangePlayer(i, j);
+        if (!state.gameStop) {
+            sf::Vector2i localPosition = { event.mouseButton.x, event.mouseButton.y};
+            int i = localPosition.x / RenderEngine::CELL_HEIGHT,
+                j = localPosition.y / RenderEngine::CELL_WIDTH;
+            state.playAndChangePlayer(i, j);
+        } else { // game is over so reset the game
+            state.resetGame();
+            // change the play screen to PlayModeScreen
+            state.playScreen = GameState::PlayScreen::PlayModeScreen;
+        }
     } else { // GameState::PlayScreen::PlayModeScreen
         sf::Vector2i localPosition = { event.mouseButton.x, event.mouseButton.y};
         checkButtonClicked(state, localPosition);
