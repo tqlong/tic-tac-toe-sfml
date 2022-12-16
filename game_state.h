@@ -77,8 +77,8 @@ private:
     // Get the next possible states
     std::vector<State> getNextStates(State s);
 
-    // Get the score of the given state via minimax
-    std::pair<int, State> getScore(State s);
+    // Get the score of the given state via alpha-beta
+    std::pair<int, State> getScore(State s, bool isMaximizingPlayer, int alpha = -100, int beta = 100);
 
     // Get the computer play (AI)
     std::pair<int, int> getComputerPlay(State s);
