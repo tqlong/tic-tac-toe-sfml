@@ -13,18 +13,9 @@ const int SIZE=3;
  * This class is responsible for storing the state of the game
  * and providing the logic to play the game.
  */
-struct GameState
+class GameState
 {
-    State s = State(SIZE, Row(SIZE, ' '));
-    bool gameStop = false;
-    char currentPlayer = 'X';
-    int finalScore = -10;
-
-    bool thinking = false;
-
-    int hoverI = -1;
-    int hoverJ = -1;
-
+public:
     enum class PlayScreen {
         PlayModeScreen,
         PlayingScreen,
@@ -35,24 +26,41 @@ struct GameState
         HumanVsMachine,
     };
 
+private:
+    State s = State(SIZE, Row(SIZE, ' '));
+    bool gameStop = false;
+    char currentPlayer = 'X';
+    int finalScore = -10;
+
+    bool thinking = false;
+
     PlayScreen playScreen = PlayScreen::PlayModeScreen;
     PlayMode playMode = PlayMode::HumanVsHuman;
 
-    // Get final message to display when game is over
-    std::string getFinalMessage() const;
+public:
+    PlayScreen getPlayScreen() const { return playScreen; }
+    void setPlayScreen(PlayScreen playScreen) { this->playScreen = playScreen; }
 
-    // Play the game on the given position
-    void playAndChangePlayer(int i, int j);
+    PlayMode getPlayMode() const { return playMode; }
+    void setPlayMode(PlayMode playMode) { this->playMode = playMode; }
 
-    // Play the game first with AI
-    void computerPlayFirst();
+    // get position i and j from the given index
+    char getPlay(int i, int j) const;
 
-    // set the hover cell
-    void setHoveredCell(int i, int j);
+    bool isGameStop() const { return gameStop; }
+    bool isThinking() const { return thinking; }
 
     // reset the game
     void resetGame();
 
+    // Play the game first with AI
+    void computerPlayFirst();
+
+    // Play the game on the given position
+    void playAndChangePlayer(int i, int j);
+
+    // Get final message to display when game is over
+    std::string getFinalMessage() const;
 private:
     // toggle player
     void togglePlayer();

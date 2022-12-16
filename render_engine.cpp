@@ -10,7 +10,7 @@ const sf::IntRect GameWindow::XRECT = sf::IntRect(20, 20, 80, 80);
 void GameWindow::render() {
     clear();
 
-    switch (state.playScreen) {
+    switch (state.getPlayScreen()) {
     case GameState::PlayScreen::PlayModeScreen:
         renderPlayModeScreen();
         break;
@@ -50,12 +50,12 @@ void GameWindow::renderPlayModeScreen()
 
 void GameWindow::renderPlayingScreen()
 {
-    if (state.hoverI != -1 && state.hoverJ != -1) {
+    if (hoverI != -1 && hoverJ != -1) {
         sf::RectangleShape shape(sf::Vector2f(CELL_WIDTH, CELL_HEIGHT));
         shape.setFillColor(sf::Color(0, 0, 0, 100));
         shape.setOutlineColor(sf::Color::Yellow);
         shape.setOutlineThickness(3);
-        shape.setPosition(state.hoverI*CELL_WIDTH, state.hoverJ*CELL_HEIGHT);
+        shape.setPosition(hoverI*CELL_WIDTH, hoverJ*CELL_HEIGHT);
         
         draw(shape);
     }
@@ -64,18 +64,19 @@ void GameWindow::renderPlayingScreen()
     sf::Texture& texture = manager.getTexture();
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
-            if (state.s[i][j] != ' ') {
-                sf::CircleShape shape = createShape(texture, i, j, state.s[i][j]);
+            char play = state.getPlay(i, j);
+            if (play != ' ') {
+                sf::CircleShape shape = createShape(texture, i, j, play);
                 draw(shape);
             }
         }
     }
 
     // Draw the final message
-    if (state.gameStop) {
+    if (state.isGameStop()) {
         sf::Text text = createText(manager.getFont(), state.getFinalMessage());
         draw(text);
-    } else if (state.thinking) {
+    } else if (state.isThinking()) {
         sf::Text text = createText(manager.getFont(), "Thinking...");
         draw(text);
     }
@@ -134,4 +135,19 @@ sf::Sprite GameWindow::createButton(const std::string& msg)
     else // if (msg == "Machine vs Human")
         button.setTextureRect(sf::IntRect(220, 20, -200, 200));
     return button;
+}
+
+void GameWindow::setHoveredCell(int i, int j)
+{
+    if (i >= 0 && i < SIZE && j >= 0 && j < SIZE) {
+        hoverI = i;
+        hoverJ = j;
+    }
+}
+
+void GameWindow::setHoveredButtons(sf::Vector2i localPosition)
+{
+    isHoverOnButtonHvsH = GameWindow::getButtonHvsHRect().contains(localPosition);
+    isHoverOnButtonHvsM = GameWindow::getButtonHvsMRect().contains(localPosition);
+    isHoverOnButtonMvsH = GameWindow::getButtonMvsHRect().contains(localPosition);
 }

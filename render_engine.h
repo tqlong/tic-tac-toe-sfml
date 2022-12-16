@@ -15,6 +15,12 @@ class GameWindow: public sf::RenderWindow {
     ResourceManager& manager;
     GameState& state;
 
+    bool isHoverOnButtonHvsH = false;
+    bool isHoverOnButtonHvsM = false;
+    bool isHoverOnButtonMvsH = false;
+    int hoverI = -1;
+    int hoverJ = -1;
+
 public:
     // Size of the game board
     static const int WINDOW_WIDTH = 900;
@@ -37,10 +43,6 @@ public:
 
     static const sf::IntRect ORECT;
     static const sf::IntRect XRECT;
-
-    bool isHoverOnButtonHvsH = false;
-    bool isHoverOnButtonHvsM = false;
-    bool isHoverOnButtonMvsH = false;
 
     GameWindow(ResourceManager& manager_, GameState& state_)
         : sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Tic Tac Toe"),
@@ -66,6 +68,12 @@ public:
             BUTTON_MvH_X, BUTTON_MvH_Y,
             BUTTON_WIDTH, BUTTON_HEIGHT);
     }
+
+    // set the hover cell
+    void setHoveredCell(int i, int j);
+
+    // set hovered buttons
+    void setHoveredButtons(sf::Vector2i localPosition);
 private:
     // Create shape X, O
     sf::CircleShape createShape(sf::Texture& texture, int i, int j, char player);

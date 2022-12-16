@@ -36,6 +36,11 @@ void GameState::playAndChangePlayer(int i, int j) {
     thinking = false;
 }
 
+char GameState::getPlay(int i, int j) const
+{
+    return s[i][j];
+}
+
 void GameState::togglePlayer()
 {
     currentPlayer = (currentPlayer == 'X') ? 'O':'X';
@@ -48,14 +53,6 @@ void GameState::computerPlayFirst() {
     togglePlayer();
     checkAndProcessFinalState();
     thinking = false;
-}
-
-void GameState::setHoveredCell(int i, int j)
-{
-    if (i >= 0 && i < SIZE && j >= 0 && j < SIZE) {
-        hoverI = i;
-        hoverJ = j;
-    }
 }
 
 void GameState::resetGame()

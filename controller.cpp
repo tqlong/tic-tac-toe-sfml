@@ -26,22 +26,22 @@ void Controller::processEvent(sf::Event &event)
 
 void Controller::onMouseMoved(sf::Event &event)
 {
-    if (state.playScreen == GameState::PlayScreen::PlayModeScreen) {
+    if (state.getPlayScreen() == GameState::PlayScreen::PlayModeScreen) {
         sf::Vector2i localPosition = { event.mouseMove.x, event.mouseMove.y};
         checkButtonHovered(localPosition);
     } else {
         sf::Vector2i localPosition = { event.mouseMove.x, event.mouseMove.y};
         int i = localPosition.x / GameWindow::CELL_HEIGHT,
             j = localPosition.y / GameWindow::CELL_WIDTH;
-        state.setHoveredCell(i, j);
+        window.setHoveredCell(i, j);
     }
 }
 
 void Controller::onMouseButtonReleased(sf::Event &event)
 {
-    if (state.playScreen == GameState::PlayScreen::PlayingScreen)
+    if (state.getPlayScreen() == GameState::PlayScreen::PlayingScreen)
     {
-        if (!state.gameStop) {
+        if (!state.isGameStop()) {
             sf::Vector2i localPosition = { event.mouseButton.x, event.mouseButton.y};
             int i = localPosition.x / GameWindow::CELL_HEIGHT,
                 j = localPosition.y / GameWindow::CELL_WIDTH;
@@ -49,7 +49,7 @@ void Controller::onMouseButtonReleased(sf::Event &event)
         } else { // game is over so reset the game
             state.resetGame();
             // change the play screen to PlayModeScreen
-            state.playScreen = GameState::PlayScreen::PlayModeScreen;
+            state.setPlayScreen(GameState::PlayScreen::PlayModeScreen);
         }
     } else { // GameState::PlayScreen::PlayModeScreen
         sf::Vector2i localPosition = { event.mouseButton.x, event.mouseButton.y};
@@ -61,16 +61,16 @@ void Controller::onMouseButtonReleased(sf::Event &event)
 void Controller::checkButtonClicked(sf::Vector2i localPosition)
 {
    if (GameWindow::getButtonHvsHRect().contains(localPosition)) {
-        state.playScreen = GameState::PlayScreen::PlayingScreen;
-        state.playMode = GameState::PlayMode::HumanVsHuman;
+        state.setPlayScreen(GameState::PlayScreen::PlayingScreen);
+        state.setPlayMode(GameState::PlayMode::HumanVsHuman);
         std::cout << "Human vs Human" << std::endl;
     } else if (GameWindow::getButtonHvsMRect().contains(localPosition)) {
-        state.playScreen = GameState::PlayScreen::PlayingScreen;
-        state.playMode = GameState::PlayMode::HumanVsMachine;
+        state.setPlayScreen(GameState::PlayScreen::PlayingScreen);
+        state.setPlayMode(GameState::PlayMode::HumanVsMachine);
         std::cout << "Human vs Machine" << std::endl;
     } else if (GameWindow::getButtonMvsHRect().contains(localPosition)) {
-        state.playScreen = GameState::PlayScreen::PlayingScreen;
-        state.playMode = GameState::PlayMode::HumanVsMachine;
+        state.setPlayScreen(GameState::PlayScreen::PlayingScreen);
+        state.setPlayMode(GameState::PlayMode::HumanVsMachine);
         state.computerPlayFirst();
         std::cout << "Machine vs Human" << std::endl;
     }
@@ -79,9 +79,7 @@ void Controller::checkButtonClicked(sf::Vector2i localPosition)
 // check if a button is hovered
 void Controller::checkButtonHovered(sf::Vector2i localPosition)
 {
-    window.isHoverOnButtonHvsH = GameWindow::getButtonHvsHRect().contains(localPosition);
-    window.isHoverOnButtonHvsM = GameWindow::getButtonHvsMRect().contains(localPosition);
-    window.isHoverOnButtonMvsH = GameWindow::getButtonMvsHRect().contains(localPosition);
+    window.setHoveredButtons(localPosition);
 }
 
 void Controller::addEvent(sf::Event event)
