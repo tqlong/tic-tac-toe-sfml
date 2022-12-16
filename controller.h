@@ -2,9 +2,9 @@
 #define CONTROLLER_H
 
 #include <SFML/Graphics.hpp>
+#include <queue>
 #include "game_state.h"
 #include "render_engine.h"
-#include "queue"
 
 /// @brief Controller class
 /// This class is responsible for handling events
